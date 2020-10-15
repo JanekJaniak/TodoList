@@ -13,28 +13,29 @@ const itemsArray = [
 ]
 
 //pobiera id z data-item-id, wywołuje removeItem i renderItems
-const handleRemoveButton = () => {
-    const removeButton = document.createElement('button');
-    removeButton.appendChild(document.createTextNode("Usuń"));
-    ul.append(removeButton);
-    removeButton.addEventListener('click', removeItem)
+const handleRemoveButton = (e) => {
+    e.target.parentNode.remove();
+    removeItem();
 }
 
 //usuwa item o konkretnym id z items
-const removeItem = () => {
-    console.log("test")
+const removeItem = (itemId) => {
+    itemsArray.pop(itemId);
+    console.log(itemsArray);
 }
 
 //generuje HTMLa na podstawie bieżącego stanu items
 const renderItems = () => {
         ul.textContent = "";
         itemsArray.forEach((item) => {
-            const li = document.createElement('li');
-            li.innerHTML = item.value;      
-            ul.append(li);
-            handleRemoveButton()    
-        })
-        input.value = "";    
+            const listItem = document.createElement('li');
+            const textNode = document.createTextNode(item.value);
+            const deleteButton = document.createElement("button");
+            deleteButton.innerHTML = 'Usuń';
+            listItem.append(textNode, deleteButton);
+            ul.appendChild(listItem);
+            deleteButton.addEventListener('click', handleRemoveButton);
+        })  
 }
 
 //dodaje nowy obiekt item do arraya items
@@ -50,7 +51,8 @@ const addItem = () => {
 //pobiera value z inputa, wywołuje addItem i renderItems
 const handleAddButton = () => {
     addItem();
-    renderItems();  
+    renderItems();
+    input.value = "";     
 }
 
 addButton.addEventListener('click', handleAddButton)
