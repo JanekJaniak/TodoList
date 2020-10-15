@@ -12,6 +12,10 @@ const items = [
         value: "second item",
         id: 2
     },
+    {
+        value: "third item",
+        id: 3
+    }
 ]
 
 const addItem = () => {
@@ -27,21 +31,32 @@ const addItem = () => {
     input.value='';
 }
 
-const removeItem = (e) => {
-    //filter items
-    e.target.parentNode.remove();
+// All this function should do is push an item into items array.
+// It should take newItem as an argument.
+// newItem should be an object with id and value
+
+const removeItem = () => {
+    // filter items
+
 }
 
+
 const renderItems = () => {
-    //prints list
     list.textContent='';
-    items.forEach((item,index) => {
-        const listItem=document.createElement('li');
-        listItem.innerHTML=items[index].value + '<button data-deleteButton>Delete</button>';
-        list.appendChild(listItem); 
-        listItem.querySelector('[data-deleteButton]').addEventListener('click', removeItem);
+    items.forEach((item) => {
+        const listItem = document.createElement('li');
+        const textNode = document.createTextNode(item.value);
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = 'DELETE';
+        deleteButton.setAttribute('data-item-id', item.id);
+        deleteButton.addEventListener('click', removeItem );
+        console.log(item.id);
+        listItem.append(textNode, deleteButton);
+        list.appendChild(listItem);
         })
     }
 
 renderItems();
 addButton.addEventListener('click', addItem);
+
+//Pass a newItem argument to addItem & call renderItems
