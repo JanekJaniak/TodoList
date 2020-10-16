@@ -19,16 +19,18 @@ let items = [
 ]
 
 const addItem = () => {
-    //push item to items array
-    const newItem = input.value;
-    if(newItem==='') return;
-    let item ={
-        value:newItem,
-        id:items.length+1,
+    let item = {
+        value: input.value,
+        id: Date.now(),
     }
     items.push(item);
+}
+
+const handleAddButton = () => {
+    if(input.value === '') return;
+    addItem();
     renderItems();
-    input.value='';
+    input.value = '';
 }
 
 const removeItem = (itemId) => {
@@ -37,7 +39,7 @@ const removeItem = (itemId) => {
     })   
 }
 
-const handleDeleteButton = (itemId) =>{
+const handleDeleteButton = (itemId) => {
     removeItem(itemId);
     renderItems();
 }
@@ -59,6 +61,5 @@ const renderItems = () => {
 }
 
 renderItems();
-addButton.addEventListener('click', addItem);
+addButton.addEventListener('click', handleAddButton);
 
-//Pass a newItem argument to addItem & call renderItems
